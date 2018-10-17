@@ -31,7 +31,7 @@ int lib_rational::mGetGCD(int x, int y) const {
 lib_rational lib_rational::operator+(lib_rational const &second) const {
     int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
     int denominator = denomLcm;
-    int numerator = mNumerator * (denomLcm / denominator) + second.mNumerator * (denomLcm / second.mDenominator);
+    int numerator = mNumerator * (denomLcm / mDenominator) + second.mNumerator * (denomLcm / second.mDenominator);
     return {numerator, denominator};
 }
 
@@ -43,12 +43,36 @@ lib_rational::lib_rational(int mNumerator, int mDenominator) : mNumerator(mNumer
 lib_rational lib_rational::operator-(lib_rational const &second) const {
     int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
     int denominator = denomLcm;
-    int numerator = mNumerator * (denomLcm / denominator) - second.mNumerator * (denomLcm / second.mDenominator);
+    int numerator = mNumerator * (denomLcm / mDenominator) - second.mNumerator * (denomLcm / second.mDenominator);
     return {numerator, denominator};
 }
 
 lib_rational lib_rational::operator*(lib_rational const &second) const {
-    int numerator = numerator * second.mNumerator;
-    int denominator = denominator * second.mDenominator;
-    return {numerator, denominator};
+    int num = mNumerator * second.mNumerator;
+    int denom = mDenominator * second.mDenominator;
+    return {num, denom};
+}
+
+lib_rational lib_rational::operator/(lib_rational const &second) const {
+    int num = mNumerator * second.mDenominator;
+    int denom = mDenominator * second.mNumerator;
+    return {num, denom};
+}
+
+lib_rational::lib_rational(lib_rational const &arg) {
+    mNumerator = arg.mNumerator;
+    mDenominator = arg.mDenominator;
+    mTypify();
+    reduse();
+}
+
+ostream &operator<<(ostream &os, const lib_rational &rational) {
+    os << rational.mNumerator * rational.mSign << "|" << rational.mDenominator;
+    return os;
+}
+
+lib_rational::lib_rational() {
+    mNumerator = 0;
+    mDenominator = 1;
+    mSign = 1;
 }

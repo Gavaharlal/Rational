@@ -2,21 +2,39 @@
 #ifndef TASK4_LIB_RATIONAL_H
 #define TASK4_LIB_RATIONAL_H
 
+#include <iostream>
+using std::ostream;
 
 class lib_rational {
 public:
+
     void reduse();
+
     lib_rational operator+(lib_rational const &) const;
+
     lib_rational operator-(lib_rational const &) const;
+
     lib_rational operator*(lib_rational const &) const;
 
-    lib_rational(int , int );
+    lib_rational operator/(lib_rational const &) const;
+
+    lib_rational(int, int);
+
+    lib_rational();
+
+    lib_rational(lib_rational const &);
+
+    friend ostream& operator<<(ostream& os, const lib_rational&);
+
 
 private:
     int mNumerator;
     int mDenominator;
     int mSign;
-    int mGetGCD(int, int) const ;
+
+
+    int mGetGCD(int, int) const;
+
     void mTypify();
 
 
