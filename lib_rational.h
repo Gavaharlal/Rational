@@ -8,6 +8,7 @@ public:
     void reduse();
     lib_rational operator+(lib_rational const &) const;
     lib_rational operator-(lib_rational const &) const;
+    lib_rational operator*(lib_rational const &) const;
 
     lib_rational(int , int );
 
@@ -15,7 +16,7 @@ private:
     int mNumerator;
     int mDenominator;
     int mSign;
-    int mGetGCD(int, int);
+    int mGetGCD(int, int) const ;
     void mTypify();
 
 

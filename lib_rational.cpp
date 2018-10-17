@@ -19,7 +19,7 @@ void lib_rational::mTypify() {
     }
 }
 
-int lib_rational::mGetGCD(int x, int y) {
+int lib_rational::mGetGCD(int x, int y) const {
     if (x == 0 || y == 0) return 1;
     while (x != y)
         if (x > y)
@@ -29,8 +29,9 @@ int lib_rational::mGetGCD(int x, int y) {
 }
 
 lib_rational lib_rational::operator+(lib_rational const &second) const {
-    int numerator = mNumerator + second.mNumerator;
-    int denominator = mDenominator + second.mDenominator;
+    int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
+    int denominator = denomLcm;
+    int numerator = mNumerator * (denomLcm / denominator) + second.mNumerator * (denomLcm / second.mDenominator);
     return {numerator, denominator};
 }
 
@@ -39,6 +40,15 @@ lib_rational::lib_rational(int mNumerator, int mDenominator) : mNumerator(mNumer
     reduse();
 }
 
-lib_rational lib_rational::operator-(lib_rational const &) const {
-    return lib_rational(0, 0);
+lib_rational lib_rational::operator-(lib_rational const &second) const {
+    int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
+    int denominator = denomLcm;
+    int numerator = mNumerator * (denomLcm / denominator) - second.mNumerator * (denomLcm / second.mDenominator);
+    return {numerator, denominator};
+}
+
+lib_rational lib_rational::operator*(lib_rational const &second) const {
+    int numerator = numerator * second.mNumerator;
+    int denominator = denominator * second.mDenominator;
+    return {numerator, denominator};
 }
