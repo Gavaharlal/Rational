@@ -31,7 +31,8 @@ int lib_rational::mGetGCD(int x, int y) const {
 lib_rational lib_rational::operator+(lib_rational const &second) const {
     int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
     int denominator = denomLcm;
-    int numerator = mNumerator * (denomLcm / mDenominator) + second.mNumerator * (denomLcm / second.mDenominator);
+    int numerator = mSign * mNumerator * (denomLcm / mDenominator) +
+                    second.mSign * second.mNumerator * (denomLcm / second.mDenominator);
     return {numerator, denominator};
 }
 
@@ -43,18 +44,19 @@ lib_rational::lib_rational(int mNumerator, int mDenominator) : mNumerator(mNumer
 lib_rational lib_rational::operator-(lib_rational const &second) const {
     int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
     int denominator = denomLcm;
-    int numerator = mNumerator * (denomLcm / mDenominator) - second.mNumerator * (denomLcm / second.mDenominator);
+    int numerator = mSign * mNumerator * (denomLcm / mDenominator) -
+                    second.mSign * second.mNumerator * (denomLcm / second.mDenominator);
     return {numerator, denominator};
 }
 
 lib_rational lib_rational::operator*(lib_rational const &second) const {
-    int num = mNumerator * second.mNumerator;
+    int num = mSign * second.mSign * mNumerator * second.mNumerator;
     int denom = mDenominator * second.mDenominator;
     return {num, denom};
 }
 
 lib_rational lib_rational::operator/(lib_rational const &second) const {
-    int num = mNumerator * second.mDenominator;
+    int num = mSign * second.mSign * mNumerator * second.mDenominator;
     int denom = mDenominator * second.mNumerator;
     return {num, denom};
 }
@@ -75,4 +77,23 @@ lib_rational::lib_rational() {
     mNumerator = 0;
     mDenominator = 1;
     mSign = 1;
+}
+
+bool lib_rational::operator<(const lib_rational &second) const {
+    int denomLcm = (long) mDenominator * second.mDenominator / mGetGCD(mDenominator, second.mDenominator);
+    int diff = mSign * mNumerator * (denomLcm / mDenominator) -
+               second.mSign * second.mNumerator * (denomLcm / second.mDenominator);
+    return diff < 0;
+}
+
+bool lib_rational::operator>(const lib_rational &rhs) const {
+    return rhs < *this;
+}
+
+bool lib_rational::operator<=(const lib_rational &rhs) const {
+    return !(rhs < *this);
+}
+
+bool lib_rational::operator>=(const lib_rational &rhs) const {
+    return !(*this < rhs);
 }

@@ -12,5 +12,7 @@ int main() {
     cout << r0 << endl;
     cout << r1 / r2 << endl;
     cout << r1 - r2 << endl;
+    cout << (r1 < r2) << endl;
+    cout << (r1 > r2) << endl;
     return 0;
 }

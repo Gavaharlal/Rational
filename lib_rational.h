@@ -24,6 +24,14 @@ public:
 
     lib_rational(lib_rational const &);
 
+    bool operator<(const lib_rational &rhs) const;
+
+    bool operator>(const lib_rational &rhs) const;
+
+    bool operator<=(const lib_rational &rhs) const;
+
+    bool operator>=(const lib_rational &rhs) const;
+
     friend ostream& operator<<(ostream& os, const lib_rational&);
 
 
