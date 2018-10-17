@@ -3,4 +3,4 @@ project(Task4)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Task4 main.cpp cmake-build-debug/lib_rational.cpp cmake-build-debug/lib_rational.h)
+add_executable(Task4 main.cpp lib_rational.cpp lib_rational.h)
