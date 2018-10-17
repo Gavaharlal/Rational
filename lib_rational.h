@@ -3,12 +3,13 @@
 #define TASK4_LIB_RATIONAL_H
 
 #include <iostream>
+
 using std::ostream;
 
 class lib_rational {
 public:
 
-    void reduse();
+    void reduce();
 
     lib_rational operator+(lib_rational const &) const;
 
@@ -16,17 +17,23 @@ public:
 
     lib_rational operator*(lib_rational const &) const;
 
+    lib_rational &operator*=(lib_rational const &);
+
     lib_rational operator/(lib_rational const &) const;
 
-    lib_rational(int, int);
+    lib_rational &pow(int);
 
-    lib_rational();
+    lib_rational(int, int);
 
     lib_rational(lib_rational const &);
 
     bool operator<(const lib_rational &rhs) const;
 
     bool operator>(const lib_rational &rhs) const;
+
+    bool operator==(const lib_rational &rhs) const;
+
+    bool operator!=(const lib_rational &rhs) const;
 
     bool operator<=(const lib_rational &rhs) const;
 
@@ -36,9 +43,13 @@ public:
 
 
 private:
-    int mNumerator;
-    int mDenominator;
-    int mSign;
+public:
+    lib_rational();
+
+private:
+    int mNumerator = 0;
+    int mDenominator = 1;
+    int mSign = 1;
 
 
     int mGetGCD(int, int) const;
